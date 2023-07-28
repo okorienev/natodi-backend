@@ -1,0 +1,7 @@
+environments:
+  local:
+    ENVIRONMENT: "local"
+    DATABASE_URL: "postgresql+asyncpg://natodi-local:natodi-local@localhost:5432/natodi"
+  digitalocean:
+    ENVIRONMENT: "digitalocean"
+    DATABASE_URL: "secret"  # will be populated from env

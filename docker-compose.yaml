@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: natodi
+      POSTGRES_USER: natodi-local
+      POSTGRES_PASSWORD: natodi-local
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  localstack:
+    container_name: localstack
+    environment:
+      - DEBUG=1
+      - LOCALSTACK_HOSTNAME=localhost
+      - TEST_AWS_ACCOUNT_ID=000000000000
+      - AWS_DEFAULT_REGION=us-west-2
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+
+volumes:
+  postgres-db:
+    driver: local

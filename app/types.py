@@ -25,9 +25,9 @@ class SemVer(BaseModel):
 
 class ActionBlueprintSchema(BaseModel):
     question_id: str
-    action: str
+    action_name: str
 
 
 class StatsBlueprintSchema(BaseModel):
-    user_id: str
+    user_ident: str
     actions: list[ActionBlueprintSchema]
