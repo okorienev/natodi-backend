@@ -9,6 +9,7 @@ from alembic import context
 
 from app.models import Base
 from app.settings import settings
+from app.utils.db import prepare_connect_args
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,7 +25,8 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL.unicode_string())
+postgres_dns, _ = prepare_connect_args(settings.DATABASE_URL.unicode_string())
+config.set_main_option('sqlalchemy.url', postgres_dns)
 
 
 # other values from the config, defined by the needs of env.py,

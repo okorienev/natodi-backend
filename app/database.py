@@ -1,26 +1,15 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-from furl import furl
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 
 from app.settings import settings
+from app.utils.db import prepare_connect_args
 
-
-postgres_url = furl(settings.DATABASE_URL.unicode_string())
-connect_args = {'timeout': 20}
-
-# Digitalocean does not allow us to specify driver for the sting
-if postgres_url.scheme == 'postgresql':
-    postgres_url.scheme = 'postgresql+asyncpg'
-
-# https://github.com/sqlalchemy/sqlalchemy/issues/6275
-for key, value in postgres_url.query.params.items():
-    connect_args[key] = value
-
+postgres_dns, connect_args = prepare_connect_args(settings.DATABASE_URL.unicode_string())
 
 async_engine = create_async_engine(
-    postgres_url.url,
+    postgres_dns,
     future=True,
     connect_args=connect_args,
 )
