@@ -8,6 +8,10 @@ generate .env file from settings:
 python -m cli dotenv generate
 ```
 
+Run app
+```shell
+uvicorn app.main:app --reload
+```
 
 ### Migrations
 update database:
