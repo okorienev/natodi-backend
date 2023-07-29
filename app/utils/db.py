@@ -1,5 +1,10 @@
 from furl import furl
 
+# https://github.com/MagicStack/asyncpg/issues/737#issuecomment-861005508
+PARAM_OVERWRITE = {
+    'sslmode': 'ssl'
+}
+
 
 def prepare_connect_args(url: str) -> tuple[str, dict]:
     """
@@ -13,9 +18,8 @@ def prepare_connect_args(url: str) -> tuple[str, dict]:
     if parsed.scheme == 'postgresql':
         parsed.scheme = 'postgresql+asyncpg'
 
-    # https://github.com/sqlalchemy/sqlalchemy/issues/6275
     for key, value in parsed.query.params.items():
-        connect_args[key] = value
+        connect_args[PARAM_OVERWRITE.get(key, key)] = value
     parsed.query.load('')
 
     return parsed.url, connect_args
