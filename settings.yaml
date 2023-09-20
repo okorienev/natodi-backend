@@ -1,4 +1,7 @@
 environments:
+  local-docker:
+    ENVIRONMENT: "local"
+    DATABASE_URL: "postgresql+asyncpg://natodi-local:natodi-local@db:5432/natodi"
   local:
     ENVIRONMENT: "local"
     DATABASE_URL: "postgresql+asyncpg://natodi-local:natodi-local@localhost:5432/natodi"
