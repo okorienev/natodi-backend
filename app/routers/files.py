@@ -20,8 +20,3 @@ async def get_questions(
     layout_id: str,
 ):
     return {}
-
-
-@router.get("/test/")
-async def get_questions():
-    return {"test": "+"}
