@@ -1,0 +1,56 @@
+shell: bash
+
+commands:
+  build:
+    description: Install project dependencies
+    checksum:
+      - poetry.lock
+    persist_checksum: true
+    cmd: |
+      if [[ ${LETS_CHECKSUM_CHANGED} == true ]]; then
+        poetry install
+      fi;
+
+  infra:
+    description: spin-up dependant services (db, localstack, etc)
+    cmd: docker-compose up -d
+
+  migrate-checksum:
+    description: generate checksum file for migrate command
+    cmd: ls alembic/versions/*.py -d > alembic/versions/.version-list
+
+  migrate:
+    description: run alembic migration
+    depends:
+      - migrate-checksum
+      - build
+      - infra
+    checksum:
+      - alembic/versions/.version-list
+    persist_checksum: true
+    cmd: poetry run alembic upgrade head
+
+  migrate-generate:
+    description: generate new alembic migration
+    depends:
+      - migrate
+    cmd: poetry run alembic revision --autogenerate $@
+
+  generate-dotenv:
+    description: update .env file from settings
+    cmd: |
+      TARGET_ENV="local"
+      if [[ -n ${LETSOPT_digitalocean} ]]; then
+          TARGET_ENV="digitalocean"
+      fi
+      poetry run python -m cli dotenv generate -e "${TARGET_ENV}"
+
+  run:
+    description: Run everything
+    depends:
+      - build
+      - infra
+      - migrate
+      - generate-dotenv
+    cmd: poetry run uvicorn app.main:app --reload
+

@@ -1,41 +1,75 @@
-spin-up services app is dependant on:
+# Natodi mobile app back-end application
+
+## System requirements
+- linux-based OS (or Windows + WSL)
+- [docker](https://docs.docker.com/engine/install/) + [docker-compose](https://docs.docker.com/compose/install/)
+
+## How to run project for the first time:
+
+### Install required system dependencies
 ```shell
-docker-compose up -d
+sudo apt update
+sudo apt install \
+    build-essential \
+    curl \
+    libbz2-dev \
+    libffi-dev \
+    liblzma-dev \
+    libncursesw5-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxmlsec1-dev \
+    llvm \
+    make \
+    tk-dev \
+    wget \
+    xz-utils \
+    zlib1g-dev
 ```
 
-generate .env file from settings:
+### Install pyenv [Pyenv](https://github.com/pyenv/pyenv#getting-pyenv)
 ```shell
-python -m cli dotenv generate
+curl https://pyenv.run | bash
 ```
 
-Run app
+Add these lines to your ~/.bashrc, reload your shell
 ```shell
-uvicorn app.main:app --reload
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 ```
 
-### Migrations
-update database:
-```shell
-# non-docker
-alembic upgrade head
+Run `pyenv version`, it should be the same as in `.python-version` file in repository root
 
-# docker
-docker-compose run server alembic upgrade head
+Run `pyenv install`
+
+### Install poetry [Poetry](https://python-poetry.org/docs/#installation):
+```shell
+  curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-downgrade database version by 1
+Add this line to your ~/.bashrc, reload your shell
 ```shell
-# non-docker
-alembic downgrade -1
-
-# docker 
-docker-compose run server alembic downgrade -1
+export PATH="$HOME.local/bin:$PATH"
 ```
 
-generate new version (when editing models)
-```shell
-# non-docker
-alembic revision --autogenerate -m <your_revision_slug>
+Check that everything is ok with `poetry --version`
 
-# TODO add dockerized version
+### Install lets [lets](https://lets-cli.org/docs/installation)
+```shell
+curl --proto '=https' --tlsv1.2 -sSf https://lets-cli.org/install.sh | sh -s -- -b ~/bin
 ```
+
+Check that everything is ok with `lets --version`
+
+### Run:
+```shell
+lets run
+```
+
+## Commands (check `lets --help` for full list of commands)
+
+- `lets run` to run project
+- `lets migrate-generate -m <revision_name>` to create new db migration

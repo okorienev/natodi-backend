@@ -21,11 +21,6 @@ services:
     image: localstack/localstack:latest
     ports:
       - "4566:4566"
-  server:
-    build:
-      context: .
-    ports:
-      - 8000:8000
 
 volumes:
   postgres-db:
