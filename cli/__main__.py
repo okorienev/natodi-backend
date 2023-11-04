@@ -1,14 +1,12 @@
 from typer import Typer
 from .commands import (
-    generate_dotenv,
-    generate_token,
-    authorize_user
+    dotenv_cli,
+    auth_cli
 )
 
 cli = Typer()
-cli.add_typer(generate_dotenv, name="dotenv")
-cli.add_typer(generate_token, name="auth")
-cli.add_typer(authorize_user, name="auth")
+cli.add_typer(dotenv_cli, name="dotenv")
+cli.add_typer(auth_cli, name="auth")
 
 
 if __name__ == "__main__":

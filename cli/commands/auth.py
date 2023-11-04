@@ -4,12 +4,12 @@ from typer import Typer, Option
 from app.settings import settings
 
 
-def create_access_token(data: dict, expires_delta: timedelta, secret_key: str):
+def create_access_token(data: dict, expires_delta: timedelta, secret_key: str, algorithm: str) -> str:
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, secret_key,
-                             algorithm=settings.ALGORITHM)
+                             algorithm=algorithm)
     return encoded_jwt
 
 
@@ -26,7 +26,7 @@ def generate_token(
         settings.ACCESS_TOKEN_EXPIRE_DAYS, "-e", "--expire", help="expire time for the token (days)")
 ):
     access_token = create_access_token(
-        data={"sub": username}, expires_delta=timedelta(days=expire_delta), secret_key=secret_key)
+        data={"sub": username}, expires_delta=timedelta(days=expire_delta), secret_key=secret_key, algorithm=settings.ALGORITHM)
     print({
         "credentials": username,
         "access_token": access_token,
@@ -45,13 +45,12 @@ def authorize_user(
     try:
         payload = jwt.decode(token, settings.SECRET_KEY,
                              algorithms=[settings.ALGORITHM])
-        token_sub = payload.get("sub")
-        if username != "admin" or username != token_sub:
-            print("Could not validate credentials")
-            return
-
     except JWTError as error:
         print(f"Unable to decode the token: {error}")
         return
+
+    token_sub = payload.get("sub")
+    if username != "admin" or username != token_sub:
+        print("Could not validate credentials")
 
     print(f"User: '{username}' authorized successfully! Token will be active untill: {datetime.fromtimestamp(payload.get('exp'))} UTC+0")
