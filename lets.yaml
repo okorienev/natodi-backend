@@ -44,7 +44,11 @@ commands:
       if [[ -n ${LETSOPT_digitalocean} ]]; then
           TARGET_ENV="digitalocean"
       fi
-      poetry run python -m cli dotenv generate -e "${TARGET_ENV}"
+      poetry run python -m cli.dotenv -e "${TARGET_ENV}"
+
+  generate-token:
+    description: generate JWT to interact with an API
+    cmd: poetry run python -m cli.app auth generate -u admin
 
   run:
     description: Run everything
