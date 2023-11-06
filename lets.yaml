@@ -25,6 +25,7 @@ commands:
       - migrate-checksum
       - build
       - infra
+      - generate-dotenv
     checksum:
       - alembic/versions/.version-list
     persist_checksum: true
