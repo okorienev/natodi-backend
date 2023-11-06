@@ -52,7 +52,7 @@ Run `pyenv install`
 
 Add this line to your ~/.bashrc, reload your shell
 ```shell
-export PATH="$HOME.local/bin:$PATH"
+export PATH="$HOME/local/bin:$PATH"
 ```
 
 Check that everything is ok with `poetry --version`
