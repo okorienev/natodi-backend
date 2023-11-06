@@ -62,6 +62,11 @@ Check that everything is ok with `poetry --version`
 curl --proto '=https' --tlsv1.2 -sSf https://lets-cli.org/install.sh | sh -s -- -b ~/bin
 ```
 
+Add this line to your ~/.bashrc, reload your shell
+```shell
+export PATH=$PATH:$HOME/bin
+```
+
 Check that everything is ok with `lets --version`
 
 ### Run:
