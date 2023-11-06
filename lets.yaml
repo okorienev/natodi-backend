@@ -48,7 +48,11 @@ commands:
 
   generate-token:
     description: generate JWT to interact with an API
-    cmd: poetry run python -m cli.app auth generate -u admin
+    cmd: poetry run python -m cli.app auth generate -u admin $@
+
+  check-auth:
+    description: check token
+    cmd: poetry run python -m cli.app auth authorize -u admin $@
 
   run:
     description: Run everything
