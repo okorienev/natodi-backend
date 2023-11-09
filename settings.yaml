@@ -9,4 +9,8 @@ environments:
   digitalocean:
     ENVIRONMENT: "digitalocean"
     DATABASE_URL: "secret"  # will be populated from env
+    SECRET_KEY: "6879bf6c5cf0c67486bca26e3bf60cb43fa2ea869d1ce77604f7f65d7dbdfec6"
+    ALGORITHM: "HS256"
+    USERNAME: "admin"
+    ACCESS_TOKEN_EXPIRE_DAYS: 7
     
