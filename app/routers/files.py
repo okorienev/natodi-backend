@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Depends
+from typing import Annotated
 
 from app.const import SEMVER_REGEX
+from app.dependencies.auth import get_user_from_token_or_abort
 
 router = APIRouter(
     prefix="/files",
@@ -20,3 +22,10 @@ async def get_questions(
     layout_id: str,
 ):
     return {}
+
+
+@router.post("/authorization")
+async def authorization(
+    token: Annotated[dict, Depends(get_user_from_token_or_abort)]
+):
+    return {token}

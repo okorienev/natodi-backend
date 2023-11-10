@@ -52,7 +52,7 @@ Run `pyenv install`
 
 Add this line to your ~/.bashrc, reload your shell
 ```shell
-export PATH="$HOME.local/bin:$PATH"
+export PATH="$HOME/local/bin:$PATH"
 ```
 
 Check that everything is ok with `poetry --version`
@@ -60,6 +60,11 @@ Check that everything is ok with `poetry --version`
 ### Install lets [lets](https://lets-cli.org/docs/installation)
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://lets-cli.org/install.sh | sh -s -- -b ~/bin
+```
+
+Add this line to your ~/.bashrc, reload your shell
+```shell
+export PATH=$PATH:$HOME/bin
 ```
 
 Check that everything is ok with `lets --version`
@@ -73,3 +78,5 @@ lets run
 
 - `lets run` to run project
 - `lets migrate-generate -m <revision_name>` to create new db migration
+- `lets generate-token` to create a token for access you can also add `-k <secret key (256bit)>` to provide non-default key for token encription, and `-e <expire time (days)>` for specific token duration (7 days by default)
+- `lets check-auth -t <token>` to check the token activity

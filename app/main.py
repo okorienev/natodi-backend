@@ -10,4 +10,4 @@ app.include_router(statistics_router)
 @app.get("/health")
 async def root() -> dict:
     return {"status": "ok"}
-
+    

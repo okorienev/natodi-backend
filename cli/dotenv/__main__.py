@@ -1,9 +1,7 @@
 from typer import Typer, Option
 from yaml import safe_load
 
-
 cli = Typer()
-
 
 @cli.command(name='generate')
 def generate_dotenv(
@@ -19,3 +17,8 @@ def generate_dotenv(
     with open(output_file, 'w') as fd:
         for key, value in env.items():
             fd.write(f"{key.upper()}={value}\n")
+
+
+if __name__ == "__main__":
+    cli()
+
