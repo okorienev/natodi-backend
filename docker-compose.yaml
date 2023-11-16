@@ -11,6 +11,17 @@ services:
       - postgres-db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  db-test:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: natodi
+      POSTGRES_USER: natodi-local
+      POSTGRES_PASSWORD: natodi-local
+      PGPORT: 5469
+    ports:
+      - "5469:5469"
+
   localstack:
     container_name: localstack
     environment:
