@@ -54,6 +54,16 @@ commands:
     description: check token
     cmd: poetry run python -m cli.app auth authorize -u admin $@
 
+  test:
+    description: run tests
+    depends:
+      - build
+      - infra
+      - generate-dotenv
+    env:
+      DATABASE_URL: "postgresql+asyncpg://natodi-local:natodi-local@localhost:5469/natodi"
+    cmd: poetry run pytest
+
   run:
     description: Run everything
     depends:
