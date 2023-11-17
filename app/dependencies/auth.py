@@ -26,8 +26,13 @@ def get_user_from_token_or_abort(authorization: HTTPAuthorizationCredentials = D
     except JWTError as error:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Forbidden",
+            detail=str(error)
         ) from error
+    
+    if payload.get("sub") != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials"
+        )
 
-    user = payload.get("sub")
     return token
