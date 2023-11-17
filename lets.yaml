@@ -62,7 +62,7 @@ commands:
       - generate-dotenv
     env:
       DATABASE_URL: "postgresql+asyncpg://natodi-local:natodi-local@localhost:5469/natodi"
-    cmd: poetry run pytest
+    cmd: poetry run pytest -v
 
   run:
     description: Run everything

@@ -24,7 +24,7 @@ def generate_token(
                              help="secret key for token generation"),
     expire_delta: int = Option(
         settings.ACCESS_TOKEN_EXPIRE_DAYS, "-e", "--expire", help="expire time for the token (days)")
-):
+) -> str:
     access_token = create_access_token(
         data={"sub": username}, expires_delta=timedelta(days=expire_delta), secret_key=secret_key, algorithm=settings.ALGORITHM)
     token_data = {
@@ -34,6 +34,7 @@ def generate_token(
         "access_token": access_token,
     }
     for key, value in token_data.items(): print(key, ": ", value)
+    return access_token
 
 
 @cli.command(name="authorize")
@@ -53,5 +54,5 @@ def authorize_user(
     token_sub = payload.get("sub")
     if username != "admin" or username != token_sub:
         print("Could not validate credentials")
-
-    print(f"User: '{username}' authorized successfully! \nToken will be active untill: {datetime.fromtimestamp(payload.get('exp'))}")
+    else:
+        print(f"User: '{username}' authorized successfully! \nToken will be active untill: {datetime.fromtimestamp(payload.get('exp'))}")
