@@ -6,7 +6,6 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-
 from app.models import Base
 from app.settings import settings
 from app.utils.db import prepare_connect_args
@@ -26,7 +25,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 target_metadata = Base.metadata
 postgres_dns, _ = prepare_connect_args(settings.DATABASE_URL.unicode_string())
-config.set_main_option('sqlalchemy.url', postgres_dns)
+config.set_main_option("sqlalchemy.url", postgres_dns)
 
 
 # other values from the config, defined by the needs of env.py,

@@ -80,3 +80,4 @@ lets run
 - `lets migrate-generate -m <revision_name>` to create new db migration
 - `lets generate-token` to create a token for access you can also add `-k <secret key (256bit)>` to provide non-default key for token encription, and `-e <expire time (days)>` for specific token duration (7 days by default)
 - `lets check-auth -t <token>` to check the token activity
+- `lets lint` to run linter & formatter

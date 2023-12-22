@@ -14,7 +14,7 @@ router = APIRouter(
 @router.put("/", status_code=status.HTTP_201_CREATED)
 async def put_stats(
     stats: StatsBlueprintSchema,
-    interactor: SaveStatsInteractor = Depends(get_save_stats_interactor)
+    interactor: SaveStatsInteractor = Depends(get_save_stats_interactor),
 ):
     await interactor.execute(stats)
 

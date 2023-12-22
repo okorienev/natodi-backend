@@ -1,12 +1,14 @@
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.settings import settings
 from app.utils.db import prepare_connect_args
 
-postgres_dns, connect_args = prepare_connect_args(settings.DATABASE_URL.unicode_string())
+postgres_dns, connect_args = prepare_connect_args(
+    settings.DATABASE_URL.unicode_string()
+)
 
 async_engine = create_async_engine(
     postgres_dns,

@@ -73,3 +73,8 @@ commands:
       - generate-dotenv
     cmd: poetry run uvicorn app.main:app --reload
 
+  lint:
+    description: Run linter and formatter (ruff)
+    depends:
+      - build
+    cmd: poetry run ruff check --fix && poetry run ruff format

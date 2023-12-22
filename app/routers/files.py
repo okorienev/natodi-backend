@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Query, Depends
 from typing import Annotated
+
+from fastapi import APIRouter, Depends, Query
 
 from app.const import SEMVER_REGEX
 from app.dependencies.auth import get_user_from_token_or_abort
@@ -11,9 +12,7 @@ router = APIRouter(
 
 
 @router.get("/layout")
-async def get_layout(
-    app_version: str = Query(default=None, pattern=SEMVER_REGEX)
-):
+async def get_layout(app_version: str = Query(default=None, pattern=SEMVER_REGEX)):
     return {}
 
 
@@ -25,7 +24,5 @@ async def get_questions(
 
 
 @router.post("/authorization")
-async def authorization(
-    token: Annotated[dict, Depends(get_user_from_token_or_abort)]
-):
-    return {token}
+async def authorization(user: Annotated[dict, Depends(get_user_from_token_or_abort)]):
+    return {"user": "user"}
