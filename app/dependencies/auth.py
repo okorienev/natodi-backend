@@ -1,15 +1,15 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import jwt, JWTError
+from jose import JWTError, jwt
 
 from app.settings import settings
-
 
 auth_scheme = HTTPBearer()
 
 
-def get_user_from_token_or_abort(authorization: HTTPAuthorizationCredentials = Depends(auth_scheme)) -> str:
-
+def get_user_from_token_or_abort(
+    authorization: HTTPAuthorizationCredentials = Depends(auth_scheme),
+) -> str:
     if not authorization.credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -30,4 +30,4 @@ def get_user_from_token_or_abort(authorization: HTTPAuthorizationCredentials = D
         ) from error
 
     user = payload.get("sub")
-    return token
+    return user

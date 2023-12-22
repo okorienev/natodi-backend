@@ -10,10 +10,12 @@ class StatsRepository:
 
     async def save(self, stats: StatsBlueprintSchema) -> None:
         for action in stats.actions:
-            self.session.add(ActionLog(
-                user_ident=stats.user_ident,
-                question_id=action.question_id,
-                action_name=action.action_name,
-            ))
+            self.session.add(
+                ActionLog(
+                    user_ident=stats.user_ident,
+                    question_id=action.question_id,
+                    action_name=action.action_name,
+                )
+            )
 
         await self.session.commit()
