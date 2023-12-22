@@ -55,5 +55,5 @@ def wait_for_database_startup():
 
 @pytest_asyncio.fixture
 async def client() -> AsyncGenerator[AsyncClient, None]:
-    async with AsyncClient(app=app, base_url="http://test-server") as test_client:
+    async with AsyncClient(app=app, base_url='http://test-server') as test_client:
         yield test_client
